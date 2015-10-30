@@ -95,7 +95,8 @@ public class DataSetAdapter extends BaseAdapter {
 		RefreshableItemPresentationModel itemPresentationModel = dataSetValueModel.newRefreshableItemPresentationModel(
 				getItemViewType(position));
 		itemPresentationModel.updateData(item, new ItemContext(view, position));
-		bindableView.bindTo((AbstractPresentationModelObject)itemPresentationModel);
+		bindableView.bindTo((AbstractPresentationModelObject) itemPresentationModel);
+		itemPresentationModel.refresh();
 
 		ViewTag<RefreshableItemPresentationModel> viewTag = viewTags.tagFor(view);
 		viewTag.set(itemPresentationModel);
@@ -106,13 +107,7 @@ public class DataSetAdapter extends BaseAdapter {
 		ViewTag<RefreshableItemPresentationModel> viewTag = viewTags.tagFor(view);
 		RefreshableItemPresentationModel itemPresentationModel = viewTag.get();
 		itemPresentationModel.updateData(getItem(position), new ItemContext(view, position));
-		refreshIfRequired(itemPresentationModel);
-	}
-	
-	private void refreshIfRequired(RefreshableItemPresentationModel itemPresentationModel) {
-		if(preInitializeViews) {
-			itemPresentationModel.refresh();
-		}
+		itemPresentationModel.refresh();
 	}
 	
 	@Override
